@@ -1,0 +1,75 @@
+import java.util.Scanner;
+
+public class OnlineVotingSystem {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int candidate1 = 0;
+        int candidate2 = 0;
+        int candidate3 = 0;
+
+        int choice;
+
+        do {
+            System.out.println("\n===== ONLINE VOTING SYSTEM =====");
+            System.out.println("1. Vote for Candidate A");
+            System.out.println("2. Vote for Candidate B");
+            System.out.println("3. Vote for Candidate C");
+            System.out.println("4. Show Results");
+            System.out.println("5. Exit");
+
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            switch(choice) {
+
+                case 1:
+                    candidate1++;
+                    System.out.println("Vote given to Candidate A");
+                    break;
+
+                case 2:
+                    candidate2++;
+                    System.out.println("Vote given to Candidate B");
+                    break;
+
+                case 3:
+                    candidate3++;
+                    System.out.println("Vote given to Candidate C");
+                    break;
+
+                case 4:
+                    System.out.println("\n===== RESULTS =====");
+                    System.out.println("Candidate A Votes: " + candidate1);
+                    System.out.println("Candidate B Votes: " + candidate2);
+                    System.out.println("Candidate C Votes: " + candidate3);
+
+                    if(candidate1 > candidate2 && candidate1 > candidate3) {
+                        System.out.println("Winner: Candidate A");
+                    }
+                    else if(candidate2 > candidate1 && candidate2 > candidate3) {
+                        System.out.println("Winner: Candidate B");
+                    }
+                    else if(candidate3 > candidate1 && candidate3 > candidate2) {
+                        System.out.println("Winner: Candidate C");
+                    }
+                    else {
+                        System.out.println("It's a Tie!");
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Exiting Voting System...");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice!");
+            }
+
+        } while(choice != 5);
+
+        sc.close();
+    }
+}
