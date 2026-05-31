@@ -1,0 +1,67 @@
+# ============================================
+# Diabetes Prediction using Machine Learning
+# ============================================
+
+# Step 1: Import Libraries
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+# Step 2: Load Dataset
+# Download diabetes.csv from Kaggle
+data = pd.read_csv("diabetes.csv")
+
+# Step 3: Display First 5 Rows
+print(data.head())
+
+# Step 4: Separate Input and Output
+X = data.drop("Outcome", axis=1)
+y = data["Outcome"]
+
+# Step 5: Split Dataset into Training and Testing
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Step 6: Create Model
+model = RandomForestClassifier()
+
+# Step 7: Train Model
+model.fit(X_train, y_train)
+
+# Step 8: Test Model
+y_pred = model.predict(X_test)
+
+# Step 9: Accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print("Model Accuracy:", accuracy)
+
+# ============================================
+# Step 10: Predict New Patient Data
+# ============================================
+
+# Example Input:
+# Pregnancies, Glucose, BloodPressure,
+# SkinThickness, Insulin, BMI,
+# DiabetesPedigreeFunction, Age
+
+input_data = [[2, 120, 70, 20, 85, 28.5, 0.5, 35]]
+
+prediction = model.predict(input_data)
+
+print("\n========== PREDICTION RESULT ==========")
+
+if prediction[0] == 1:
+    print("Diabetes: YES")
+else:
+    print("Diabetes: NO")
+
+# ============================================
+# Final Message
+# ============================================
+
+print("\n======================================")
+print("PROJECT COMPLETED SUCCESSFULLY")
+print("Diabetes Prediction Model is Ready")
+print("======================================")
