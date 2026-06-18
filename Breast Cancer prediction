@@ -1,0 +1,49 @@
+# ============================================
+# Breast Cancer Prediction using Machine Learning
+# ============================================
+
+# Step 1: Import Libraries
+import pandas as pd
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+# Step 2: Load Dataset
+data = load_breast_cancer()
+
+# Convert to DataFrame
+df = pd.DataFrame(data.data, columns=data.feature_names)
+df["target"] = data.target
+
+# Step 3: Display First 5 Rows
+print(df.head())
+
+# Step 4: Separate Features and Target
+X = df.drop("target", axis=1)
+y = df["target"]
+
+# Step 5: Split Dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Step 6: Train Model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Step 7: Make Predictions
+y_pred = model.predict(X_test)
+
+# Step 8: Calculate Accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print("\nAccuracy:", accuracy * 100, "%")
+
+# Step 9: Predict New Patient Data
+sample = [X.iloc[0].values]
+prediction = model.predict(sample)
+
+if prediction[0] == 1:
+    print("Prediction: Benign (No Cancer)")
+else:
+    print("Prediction: Malignant (Cancer)")
