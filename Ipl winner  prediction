@@ -1,0 +1,48 @@
+# IPL Match Winner Prediction
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import accuracy_score
+
+# Load dataset
+data = pd.read_csv("matches.csv")
+
+# Select features
+data = data[['team1', 'team2', 'toss_winner', 'winner']]
+data = data.dropna()
+
+# Encode categorical data
+le = LabelEncoder()
+
+for col in ['team1', 'team2', 'toss_winner', 'winner']:
+    data[col] = le.fit_transform(data[col])
+
+# Features and target
+X = data[['team1', 'team2', 'toss_winner']]
+y = data['winner']
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Accuracy
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+# Example Prediction
+team1 = int(input("Enter Team1 code: "))
+team2 = int(input("Enter Team2 code: "))
+toss_winner = int(input("Enter Toss Winner code: "))
+
+prediction = model.predict([[team1, team2, toss_winner]])
+
+print("Predicted Winner Code:", prediction[0])
