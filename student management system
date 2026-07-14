@@ -1,0 +1,102 @@
+# Student Management System
+
+students = []
+
+while True:
+    print("\n===== Student Management System =====")
+    print("1. Add Student")
+    print("2. Display Students")
+    print("3. Search Student")
+    print("4. Edit Student")
+    print("5. Remove Student")
+    print("6. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        roll = input("Enter Roll Number: ")
+
+        # Check duplicate roll number
+        found = False
+        for s in students:
+            if s["Roll No"] == roll:
+                found = True
+                break
+
+        if found:
+            print("Student already exists.")
+        else:
+            name = input("Enter Name: ")
+            grade = input("Enter Grade: ")
+
+            students.append({
+                "Roll No": roll,
+                "Name": name,
+                "Grade": grade
+            })
+
+            print("Student Added Successfully!")
+
+    elif choice == "2":
+        if len(students) == 0:
+            print("No student records found.")
+        else:
+            print("\nStudent Records")
+            print("-" * 40)
+            for s in students:
+                print("Roll No :", s["Roll No"])
+                print("Name    :", s["Name"])
+                print("Grade   :", s["Grade"])
+                print("-" * 40)
+
+    elif choice == "3":
+        roll = input("Enter Roll Number to Search: ")
+        found = False
+
+        for s in students:
+            if s["Roll No"] == roll:
+                print("\nStudent Found")
+                print("Roll No :", s["Roll No"])
+                print("Name    :", s["Name"])
+                print("Grade   :", s["Grade"])
+                found = True
+                break
+
+        if not found:
+            print("Student Not Found.")
+
+    elif choice == "4":
+        roll = input("Enter Roll Number to Edit: ")
+        found = False
+
+        for s in students:
+            if s["Roll No"] == roll:
+                s["Name"] = input("Enter New Name: ")
+                s["Grade"] = input("Enter New Grade: ")
+                print("Student Updated Successfully.")
+                found = True
+                break
+
+        if not found:
+            print("Student Not Found.")
+
+    elif choice == "5":
+        roll = input("Enter Roll Number to Remove: ")
+        found = False
+
+        for s in students:
+            if s["Roll No"] == roll:
+                students.remove(s)
+                print("Student Removed Successfully.")
+                found = True
+                break
+
+        if not found:
+            print("Student Not Found.")
+
+    elif choice == "6":
+        print("Thank You!")
+        break
+
+    else:
+        print("Invalid Choice! Please try again.")
