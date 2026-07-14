@@ -1,0 +1,33 @@
+import requests
+
+print("===== Currency Converter =====")
+
+# User Input
+base_currency = input("Enter Base Currency (e.g., USD, INR, EUR): ").upper()
+target_currency = input("Enter Target Currency (e.g., INR, USD, EUR): ").upper()
+amount = float(input("Enter Amount: "))
+
+# API URL
+url = f"https://open.er-api.com/v6/latest/{base_currency}"
+
+# Fetch exchange rates
+response = requests.get(url)
+data = response.json()
+
+if data["result"] == "success":
+    rates = data["rates"]
+
+    if target_currency in rates:
+        exchange_rate = rates[target_currency]
+        converted_amount = amount * exchange_rate
+
+        print("\n===== Conversion Result =====")
+        print(f"Base Currency   : {base_currency}")
+        print(f"Target Currency : {target_currency}")
+        print(f"Amount          : {amount:.2f}")
+        print(f"Exchange Rate   : {exchange_rate:.4f}")
+        print(f"Converted Amount: {converted_amount:.2f} {target_currency}")
+    else:
+        print("Invalid target currency code.")
+else:
+    print("Invalid base currency code or API error.")
